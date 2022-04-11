@@ -7,6 +7,7 @@ import numpy as np
 import torch
 import torchaudio
 from collections import OrderedDict
+import itertools
 
 import pandas as pd
 
@@ -52,5 +53,42 @@ siren_file_set = set(list([
 
 initialize_hyper("config.yaml")
 
+def create_relevant_dataframe(overall_list):
+    overall_dict = OrderedDict()
+    cols = [
+        "Primary Threshold",
+        "Secondary Threshold",
+        "Overall Accuracy",
+        "Siren Precision",
+        "Siren Recall",
+        "Other Precision",
+        "Other Recall",
+    ]
+    for key in cols:
+        overall_dict[key] = []
+    for vals in overall_list:
+        if type(vals) is tuple:
+            main_dict = vals[-1]
+            overall_dict["Primary Threshold"] += [vals[0]]
+            overall_dict["Secondary Threshold"] += [vals[1]]
+            overall_dict["Overall Accuracy"] += [vals[2]]
+
+            for stat_type in cols[3:]:
+                class_type = stat_type.split(" ")[0].lower()
+                metric = stat_type.split(" ")[1].lower()
+                overall_dict[stat_type] += [round(main_dict[class_type][metric], 2)]
+    main_dataframe = pd.DataFrame.from_dict(overall_dict)
+    print(os.getcwd())
+    main_dataframe.to_excel("Final_Outputs.xlsx")
+    return True
+
 if __name__=="__main__":
-    calculate_accuracy(desired_indices=GLOBALS.CONFIG["siren_indices"])
+    primary_threshold_list = [1,2,3,4,5,6]
+    secondary_threshold_list = [1,2,3,4,5,6]
+    overall_list = []
+    model_path = "audioset_10_10_0.4593.pth"
+    audio_model = set_up_model(model_path)
+    for primary_threshold, secondary_threshold in list(itertools.product(primary_threshold_list,secondary_threshold_list)):
+        accuracy, all_stats = calculate_accuracy(desired_indices=GLOBALS.CONFIG["siren_indices"],primary_class_threshold=primary_threshold,secondary_class_threshold=secondary_threshold,use_model=audio_model,precision_recall_setup=True)
+        overall_list+=[(primary_threshold,secondary_threshold,accuracy,all_stats)]
+    create_relevant_dataframe(overall_list)
