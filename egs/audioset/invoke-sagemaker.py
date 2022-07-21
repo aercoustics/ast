@@ -1,3 +1,12 @@
+"""
+Invoke Sagemaker Endpoint
+
+To run: run `python invoke-sagemaker.py` or `python invoke-sagemaker.py -save_res` (to save results in csv)
+Runs on all files added to "egs/audioset/wav_files" folder
+
+Currently working sagemaker endpoint is "endpoint-2022-06-30-6GB"
+"""
+
 import pyquist as pq
 import pandas as pd
 import boto3
