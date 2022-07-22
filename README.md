@@ -12,7 +12,7 @@
  - [Contact](#Contact)
 
 ## Aercoustics Implementation
-See [README](ega/audioset/README.md) for more information on Aercoustics' implementation of the AST repo
+See [README](egs/audioset/README.md) for more information on Aercoustics' implementation of the AST repo
 
 ## News
 
