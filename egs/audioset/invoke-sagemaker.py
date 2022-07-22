@@ -33,7 +33,7 @@ def evaluate_results(res, save_res, filename):
             print('{}: {:.4f}'.format(np.array(labels)[sorted_indexes[k]],
                                     res[0][sorted_indexes[k]]))
     if save_res:
-        pq.io.write_excel(filename.stem+'.xlsx', df)
+        pq.io.write_csv(filename.stem+'.csv', df)
     
 def make_features(wav_name, mel_bins, target_length=1024):
     '''

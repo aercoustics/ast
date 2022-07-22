@@ -11,6 +11,9 @@
  - [Use Pretrained Model For Downstream Tasks](#Use-Pretrained-Model-For-Downstream-Tasks)
  - [Contact](#Contact)
 
+## Aercoustics Implementation
+See [README](ega/audioset/README.md) for more information on Aercoustics' implementation of the AST repo
+
 ## News
 
 March, 2022: We released a new preprint [*CMKD: CNN/Transformer-Based Cross-Model Knowledge Distillation for Audio Classification*](https://arxiv.org/abs/2203.06760), where we proposed a knowledge distillation based method to further improve the AST model performance without changing its architecture.
